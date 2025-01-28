@@ -17,6 +17,7 @@ import lombok.Setter;
 public class Policy {
 
 	private Long id;
+	private Client client;
 	private PolicyTypes type;
 	private LocalDate effectiveStartDate;
 	private LocalDate effectiveEndDate;

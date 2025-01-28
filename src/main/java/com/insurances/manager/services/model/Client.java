@@ -1,7 +1,5 @@
 package com.insurances.manager.services.model;
 
-import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +18,6 @@ public class Client {
 	private String name;
 	private String lastname;
 	private String email;
-	private Set<Phone> phones;
-
+	private String phone;
+	private User user;
 }

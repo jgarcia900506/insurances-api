@@ -21,6 +21,7 @@ import lombok.Setter;
 public class PolicyDTO {
 
 	private Long id;
+	private Long clientId;
 	private String type;
 	private LocalDate effectiveStartDate;
 	private LocalDate effectiveEndDate;

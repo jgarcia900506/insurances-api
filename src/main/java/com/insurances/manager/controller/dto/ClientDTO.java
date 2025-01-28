@@ -1,7 +1,5 @@
 package com.insurances.manager.controller.dto;
 
-import java.util.Set;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -21,6 +19,9 @@ public class ClientDTO {
 
 	private Long id;
 
+	@NotBlank(message = "DNI is required")
+	private String dni;
+
 	@NotBlank(message = "Name is required")
 	@Pattern(regexp = "^[A-Za-z]+$", message = "Name can only contain alphanumeric characters")
 	private String name;
@@ -34,6 +35,8 @@ public class ClientDTO {
 	private String email;
 
 	@NotEmpty(message = "A phone is required at least")
-	private Set<String> phones;
+	private String phone;
+
+	private UserDTO user;
 
 }

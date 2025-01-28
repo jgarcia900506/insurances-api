@@ -1,6 +1,4 @@
-package com.insurances.manager.services.model;
-
-import java.util.Collection;
+package com.insurances.manager.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +11,9 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class CredentialsDTO {
 
-	private Long id;
 	private String username;
 	private String password;
-	private Collection<Authority> authorities;
 
 }
