@@ -9,5 +9,6 @@ public interface ClientService {
 	Collection<Client> fetchAll();
 	Client fetchById(Long id);
 	Client create(Client client);
+	Client delete(Long id);
 
 }

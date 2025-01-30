@@ -20,8 +20,8 @@ public class PolicyServiceImpl implements PolicyService {
 	private PolicyMapper mapper = PolicyMapper.INSTANCE;
 
 	@Override
-	public Collection<Policy> fetchAll() {
-		return mapper.map(repository.findAll());
+	public Collection<Policy> fetchAll(Long id) {
+		return mapper.map(repository.findAllByClientId(id));
 	}
 
 	@Override
@@ -35,4 +35,21 @@ public class PolicyServiceImpl implements PolicyService {
 		return mapper.map(repository.save(record));
 	}
 
+	@Override
+	public Policy patch(Long id) {
+		PolicyEntity record = repository.getReferenceById(id);
+		record.setStatus(!record.isStatus());
+		repository.updatePolicyStatus(id, record.isStatus());
+
+		return mapper.map(record);
+	}
+
+	@Override
+	public Policy delete(Long id) {
+		PolicyEntity record = repository.getReferenceById(id);
+		repository.deleteById(record.getId());
+
+		return mapper.map(record);
+	}
+	
 }

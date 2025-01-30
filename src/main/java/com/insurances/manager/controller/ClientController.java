@@ -2,6 +2,7 @@ package com.insurances.manager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +56,7 @@ public class ClientController {
 	}
 
 	@Operation(
-		summary = "create a new client",
+		summary = "Create a new client",
 		description = "Create a new client and return generated record",
 		security = {
 			@SecurityRequirement(name = "bearer-token")
@@ -66,4 +67,19 @@ public class ClientController {
 		return ResponseEntity.ok(mapper.map(service.create(mapper.map(payload))));
 	}
 
+	@Operation(
+		summary = "Delete a client",
+		description = "Delete client and return removed record",
+		security = {
+			@SecurityRequirement(name = "bearer-token")
+		}
+	)
+	@DeleteMapping(path = {"/{id}"}, produces = {"application/json"})
+	public ResponseEntity<ClientDTO> delete(
+		@Parameter(name = "id", description = "Client id to delete", required = true)
+		@PathVariable(name = "id") Long id
+	) {
+		return ResponseEntity.ok(mapper.map(service.delete(id)));
+	}
+	
 }

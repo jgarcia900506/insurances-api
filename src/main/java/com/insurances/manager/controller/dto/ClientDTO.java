@@ -23,11 +23,11 @@ public class ClientDTO {
 	private String dni;
 
 	@NotBlank(message = "Name is required")
-	@Pattern(regexp = "^[A-Za-z]+$", message = "Name can only contain alphanumeric characters")
+	@Pattern(regexp = "^[A-Za-z\\s]+[^\\W]+$", message = "Name can only contain alphanumeric characters")
 	private String name;
 
 	@NotBlank(message = "Lastname is required")
-	@Pattern(regexp = "^[A-Za-z]+$", message = "Lastname can only contain alphanumeric characters")
+	@Pattern(regexp = "^[A-Za-z\\s]+[^\\W]+$", message = "Lastname can only contain alphanumeric characters")
 	private String lastname;
 
 	@NotBlank(message = "Email is required")

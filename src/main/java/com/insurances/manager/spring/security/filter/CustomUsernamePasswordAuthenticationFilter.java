@@ -27,7 +27,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends AbstractAuthenti
 	private ObjectMapper jsonMapper = null;
 	
 	public CustomUsernamePasswordAuthenticationFilter(AuthenticationManager manager, AuthenticationSuccessHandler handler) {
-		super(new AntPathRequestMatcher("/login", "POST"));
+		super(new AntPathRequestMatcher("/api/login", "POST"));
 		setAuthenticationManager(manager);
 		
 		JsonFactory jsonFactory = new JsonFactory();

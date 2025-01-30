@@ -2,7 +2,9 @@ package com.insurances.manager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,9 +36,12 @@ public class PolicyController {
 			@SecurityRequirement(name = "bearer-token")
 		}
 	)
-	@GetMapping(produces = "application/json")
-	public ResponseEntity<Iterable<PolicyDTO>> fetchAll() {
-		return ResponseEntity.ok(mapper.map(service.fetchAll()));
+	@GetMapping(path = {"/user/{id}"}, produces = "application/json")
+	public ResponseEntity<Iterable<PolicyDTO>> fetchAll(
+		@Parameter(name = "id", description = "Owner id to fetch", required = true)
+		@PathVariable(name = "id") Long id
+	) {
+		return ResponseEntity.ok(mapper.map(service.fetchAll(id)));
 	}
 
 	@Operation(
@@ -55,7 +60,7 @@ public class PolicyController {
 	}
 
 	@Operation(
-		summary = "create a new policy",
+		summary = "Create a new policy",
 		description = "Create a new policy and return generated record",
 		security = {
 			@SecurityRequirement(name = "bearer-token")
@@ -65,4 +70,35 @@ public class PolicyController {
 	public ResponseEntity<PolicyDTO> create(@Valid @RequestBody PolicyDTO record) {
 		return ResponseEntity.ok(mapper.map(service.create(mapper.map(record))));
 	}
+
+	@Operation(
+		summary = "Update status of policy",
+		description = "Set policy status and return generated record",
+		security = {
+			@SecurityRequirement(name = "bearer-token")
+		}
+	)
+	@PatchMapping(path="/{id}/status", produces = {"application/json"})
+	public ResponseEntity<PolicyDTO> disable(
+		@Parameter(name = "id", description = "Client id to fetch", required = true)
+		@PathVariable(name = "id") Long id
+	) {
+		return ResponseEntity.ok(mapper.map(service.patch(id)));
+	}
+
+	@Operation(
+		summary = "Delete a policy",
+		description = "Delete policy and return removed record",
+		security = {
+			@SecurityRequirement(name = "bearer-token")
+		}
+	)
+	@DeleteMapping(path = {"/{id}"}, produces = {"application/json"})
+	public ResponseEntity<PolicyDTO> delete(
+		@Parameter(name = "id", description = "Client id to delete", required = true)
+		@PathVariable(name = "id") Long id
+	) {
+		return ResponseEntity.ok(mapper.map(service.delete(id)));
+	}
+	
 }

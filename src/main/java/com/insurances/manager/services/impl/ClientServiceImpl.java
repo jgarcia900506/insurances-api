@@ -1,8 +1,10 @@
 package com.insurances.manager.services.impl;
 
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,10 +54,29 @@ public class ClientServiceImpl implements ClientService {
 			client.setUser(user);
 			
 			record = mapper.map(client);
+		} else {
+			User user = client.getUser();
+			if(Objects.nonNull(user.getUsername())) {
+				Optional.ofNullable(service.fetchById(user.getId())).ifPresent(stored -> {
+					stored.setUsername(user.getUsername());					
+					client.setUser(service.create(stored));
+				});
+			}
+			
+			record = mapper.map(client);
 		};
 		
 		
 		return mapper.map(repository.save(record));
+	}
+
+	@Override
+	public Client delete(Long id) {
+		Client client = mapper.map(repository.findById(id).get());
+		repository.deleteById(id);
+		service.delete(client.getUser().getId());
+		
+		return client;
 	}
 
 }

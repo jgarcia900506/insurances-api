@@ -6,8 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Set;
 import java.util.Base64.Encoder;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,9 +18,7 @@ import com.insurances.manager.controller.dto.AuthorityDTO;
 import com.insurances.manager.controller.dto.UserDTO;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 
 @Component

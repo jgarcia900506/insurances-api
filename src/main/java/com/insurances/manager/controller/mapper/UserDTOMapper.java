@@ -18,7 +18,6 @@ public interface UserDTOMapper {
 	
 	@InheritInverseConfiguration
 	@Mapping(target = "password", ignore = true)
-	@Mapping(target = "authorities", ignore = true)
 	User map(UserDTO payload);
 
 	/*

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.insurances.manager.controller.dto.UserDTO;
-import com.insurances.manager.spring.security.bean.JwtAuthToken;
 import com.insurances.manager.spring.security.jwt.JwtDecoder;
 
 import io.jsonwebtoken.JwtException;
@@ -31,7 +30,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)throws IOException, ServletException {
 		String       AuthHeader = request.getHeader("Authorization");
-		JwtAuthToken AuthToken  = null;
 		
 		if(AuthHeader == null || !AuthHeader.startsWith("Bearer")) {
 			chain.doFilter(request, response);

@@ -25,6 +25,9 @@ spring:
     jpa:
       repositories:
         enabled: true
+  mvc:
+    servlet:
+      path: /api
 
 springdoc:
   api-docs:

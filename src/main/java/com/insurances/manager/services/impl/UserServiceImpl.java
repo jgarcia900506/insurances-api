@@ -1,5 +1,6 @@
 package com.insurances.manager.services.impl;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User create(User user) {
 
-		user.getAuthorities().forEach(authority -> {
+		user.getAuthorities().stream().filter(authority -> Objects.isNull(authority.getId())).forEach(authority -> {
 			Authority record = service.fetchByName(authority.getName());
 			authority.setId(record.getId());
 		});
@@ -37,6 +38,19 @@ public class UserServiceImpl implements UserService {
 		
 
 		return mapper.map(repository.save(record));
+	}
+
+	@Override
+	public User fetchById(Long id) {
+		return repository.findById(id).map(mapper::map).orElse(null);
+	}
+
+	@Override
+	public User delete(Long id) {
+		User user = mapper.map(repository.findById(id).get());
+		repository.deleteById(id);
+		
+		return user;
 	}
 
 }
