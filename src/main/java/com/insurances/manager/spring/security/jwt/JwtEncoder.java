@@ -21,6 +21,7 @@ public class JwtEncoder {
 	@Value("${application.jwt.key}")
 	private String key;
 
+	@SuppressWarnings("deprecation")
 	public String generate(UserDetails details) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		AuthUtils authUtils = AuthUtils.getInstance();
 		String[] authorities = authUtils.AuthoritiesToClaims(details.getAuthorities());

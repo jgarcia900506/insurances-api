@@ -5,8 +5,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Base64.Encoder;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -27,9 +25,8 @@ public class JwtDecoder {
 	@Value("${application.jwt.key}")
 	private String key;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "deprecation"})
 	public UserDTO validate(String token)throws JwtException, IllegalArgumentException, UnsupportedEncodingException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
-		Encoder		enconder = Base64.getEncoder();
 		Claims		claims	= Jwts.parser()
 								.setSigningKey(key.getBytes())
 								.build()
