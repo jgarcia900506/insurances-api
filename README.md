@@ -3,7 +3,8 @@
 ## Requerimeintos
 - Gradle:   8.10.2+
 - OpenJDK:  17.0.13_p11+
-- Lombok:   v1.18.36
+- Lombok:   1.18.36
+- Docker    27.4.1
 
 ## Validaciones
 Antes de inciar, valida que tu IDE tiene instalado el complemento para soportar Lombok, en caso contrario descargar el instalador desde la página oficial de [Lombok](https://projectlombok.org/) así como las demás dependencias.
@@ -15,35 +16,34 @@ Antes de inciar, valida que tu IDE tiene instalado el complemento para soportar 
 ```
 
 ### Ejecutar
+Para ejecutar el proyecto completo, se requiere tener Docker, opcionalmente se agrega la opcion para ejecutar solo el backend:
+
+* Back
+
 ```bash
 ~$gradle bootRun
 ```
+Nota: para salir solo preciona "Ctrl + C"
 
-## Base de Datos
-Para este ejemplo se requiere el uso de PostgreSQL, puedes utilizar docker para obtener una copia funcional:
+
+* Ejecusion de proyecto completo
 
 ```bash
-~$docker run --name some-postgres -e POSTGRES_PASSWORD=2449 --publish 5432:5432 -d postgres
+~$docker compose up --build
+```
+Nota: si no es la primera vez que se ejecuta omitir el argumento "--build"
+
+* Detener de proyecto completo
+
+```bash
+~$docker compose down
 ```
 
-Se ha asigando unpassword de ejemplo que tambien puedes encontrar en el archivo "src/main/resources/application.yml", favor de actualizar la contraseña de ser necesario.
 
+## Base de Datos
+Se ha asigando un password por default a los clientes que puedes encontrar en el archivo "src/main/resources/application.yml", en el
+caso del administrador favor de utilizar el password "1234567890".
 
-### Datos requeridos
-Antes de continuar debes ejecutar una vez la aplicación con el fin de crear las tablas necesarias, a continuacion, utilizando tu IDE de preferencia para SQL, ejecuta lo siguinete:
-
-```sql
-# Roles
-INSERT INTO authorities ("name") VALUES('administrator');
-INSERT INTO authorities ("name") VALUES('client');
-
-# Usuario
-INSERT INTO users ("password", username) VALUES('1234567890', 'admin@domain.io');
-
-# Asignación
-INSERT INTO user_authorities(user_id, authority_id)
-SELECT u.id, a.id FROM users u JOIN authorities a ON a.name = 'administrator' WHERE u.username= 'admin@domain.io';
-```
 
 ### API
 
