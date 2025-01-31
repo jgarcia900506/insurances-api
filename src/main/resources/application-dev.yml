@@ -30,7 +30,11 @@ spring:
     jpa:
       repositories:
         enabled: true
-  
+  sql:
+    init:
+      data-locations:
+      - classpath*: data.sql
+
 logging:
   level:
     root: info
