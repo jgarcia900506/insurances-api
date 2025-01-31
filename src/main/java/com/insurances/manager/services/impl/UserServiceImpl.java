@@ -1,9 +1,10 @@
 package com.insurances.manager.services.impl;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.insurances.manager.domain.entity.UserEntity;
@@ -23,6 +24,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private AuthorityService service;
 
+	@Autowired
+	private PasswordEncoder encoder;
+
+	@Value("${application.security.client.pwd}")
+	private String securityPwd;
+
 	private UserMapper mapper = UserMapper.INSTANCE;
 
 	@Override
@@ -34,7 +41,7 @@ public class UserServiceImpl implements UserService {
 		});
 
 		UserEntity record = mapper.map(user);
-		record.setPassword(String.valueOf(UUID.randomUUID()));
+		record.setPassword(encoder.encode(securityPwd));
 		
 
 		return mapper.map(repository.save(record));

@@ -24,7 +24,7 @@ import io.jsonwebtoken.Jwts;
 @Component
 public class JwtDecoder {
 
-	@Value("${jwt.key}")
+	@Value("${application.jwt.key}")
 	private String key;
 
 	@SuppressWarnings("unchecked")

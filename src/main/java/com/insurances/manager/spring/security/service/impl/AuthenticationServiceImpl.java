@@ -1,11 +1,14 @@
 package com.insurances.manager.spring.security.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.insurances.manager.controller.dto.UserDTO;
+import com.insurances.manager.domain.entity.UserEntity;
 import com.insurances.manager.domain.repository.UserRepository;
-import com.insurances.manager.spring.security.mapper.UserMapper;
+import com.insurances.manager.services.mapper.UserMapper;
+import com.insurances.manager.services.model.User;
 import com.insurances.manager.spring.security.service.AuthenticationService;
 
 import jakarta.transaction.Transactional;
@@ -16,12 +19,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Autowired
 	private UserRepository repository;
 
+	@Autowired
+	private PasswordEncoder encoder;
+
 	private UserMapper mapper = UserMapper.INSTANCE;
 
 	@Override
 	@Transactional
-	public UserDTO authenticate(String username, String password) {
-		return repository.findByUsername(username).map(mapper::map).orElse(null);
+	public User authenticate(String username, String password) {
+		UserEntity user = repository.findByUsername(username).get();
+		
+		if("admin@domain.io".equals(username)) {
+			if(!user.getPassword().equals(password)) {
+				throw new AuthenticationCredentialsNotFoundException("Invalid credentials");
+			}
+		} else {
+			if(!encoder.matches(password, user.getPassword())) {
+				throw new AuthenticationCredentialsNotFoundException("Invalid credentials");
+			}
+		}
+		
+		return mapper.map(user);
 	}
 
 }

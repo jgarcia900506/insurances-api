@@ -1,30 +1,14 @@
 server:
   port: 8080
-  
+
 spring:
   application:
     name: insurances
-  datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/postgres
-    username: postgres
-    password: 2449
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 10
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format-sql: true
-    show-sql: true
-    open-in-view: true
-  data:
-    jpa:
-      repositories:
-        enabled: true
+  main:
+    allow-circular-references: true
+  profiles:
+    active:
+    - dev
   mvc:
     servlet:
       path: /api
@@ -34,13 +18,3 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
-
-jwt:
-  key: 1nsur4nc3520250127212200ExampleForTest
-     
-
-logging:
-  level:
-    root: info
-    '[org.springframework.web]': debug
-    '[org.hibernate.SQL]': debug

@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "application.jwt.key",
+    "type": "java.lang.String",
+    "description": "Security key use to certificate jwt token"
+  },
+  {
+    "name": "application.security.client.pwd",
+    "type": "java.lang.String",
+    "description": "Default password for clients on this application"
+  }
+]}

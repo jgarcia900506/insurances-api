@@ -10,7 +10,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.insurances.manager.controller.dto.UserDTO;
+import com.insurances.manager.controller.mapper.UserDTOMapper;
+import com.insurances.manager.services.model.User;
 import com.insurances.manager.spring.security.service.AuthenticationService;
 
 @Component
@@ -19,17 +20,20 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
 	private AuthenticationService service;
 
+	private UserDTOMapper mapper = UserDTOMapper.INSTANCE;
+
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = String.valueOf(authentication.getPrincipal());
 		String password = String.valueOf(authentication.getCredentials());
 
-		UserDTO user = service.authenticate(username, password);
+		User user = service.authenticate(username, password);
+
 		if(Objects.isNull(user)) {
 			throw new UsernameNotFoundException("User not found with Credential provided!");
 		}
 
-		return new UsernamePasswordAuthenticationToken(user, user.getAuthorities());
+		return new UsernamePasswordAuthenticationToken(mapper.map(user), user.getAuthorities());
 	}
 
 	@Override

@@ -1,9 +1,9 @@
 package com.insurances.manager.spring.security.service;
 
-import com.insurances.manager.controller.dto.UserDTO;
+import com.insurances.manager.services.model.User;
 
 public interface AuthenticationService {
 
-	UserDTO authenticate(String username, String password);
+	User authenticate(String username, String password);
 
 }

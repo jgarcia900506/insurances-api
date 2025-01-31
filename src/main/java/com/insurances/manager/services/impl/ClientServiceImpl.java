@@ -26,7 +26,7 @@ public class ClientServiceImpl implements ClientService {
 
 	@Autowired
 	private UserService service;
-
+	
 	private ClientMapper mapper = ClientMapper.INSTANCE;
 
 	@Override

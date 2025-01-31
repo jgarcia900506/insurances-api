@@ -18,7 +18,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtEncoder {
 
-	@Value("${jwt.key}")
+	@Value("${application.jwt.key}")
 	private String key;
 
 	public String generate(UserDetails details) throws UnsupportedEncodingException, NoSuchAlgorithmException {

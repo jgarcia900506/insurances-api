@@ -38,11 +38,11 @@ INSERT INTO authorities ("name") VALUES('administrator');
 INSERT INTO authorities ("name") VALUES('client');
 
 # Usuario
-INSERT INTO users ("password", username) VALUES('xxx', 'admin');
+INSERT INTO users ("password", username) VALUES('1234567890', 'admin@domain.io');
 
 # Asignación
 INSERT INTO user_authorities(user_id, authority_id)
-SELECT u.id, a.id FROM users u JOIN authorities a ON a.name = 'administrator' WHERE u.username= 'admin';
+SELECT u.id, a.id FROM users u JOIN authorities a ON a.name = 'administrator' WHERE u.username= 'admin@domain.io';
 ```
 
 ### API
@@ -55,7 +55,7 @@ Para poder utilizar las funciones expuestas se require un token, puedes obtener 
 curl --location 'http://127.0.0.1:8080/api/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "username": "admin",
-    "password": "ElPasswordNoSeValida"
+    "username": "admin@domain.io",
+    "password": "1234567890"
 }'
 ```
