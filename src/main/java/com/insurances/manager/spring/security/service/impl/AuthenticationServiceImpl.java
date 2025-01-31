@@ -29,14 +29,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public User authenticate(String username, String password) {
 		UserEntity user = repository.findByUsername(username).get();
 		
-		if("admin@domain.io".equals(username)) {
-			if(!user.getPassword().equals(password)) {
-				throw new AuthenticationCredentialsNotFoundException("Invalid credentials");
-			}
-		} else {
-			if(!encoder.matches(password, user.getPassword())) {
-				throw new AuthenticationCredentialsNotFoundException("Invalid credentials");
-			}
+		if(!encoder.matches(password, user.getPassword())) {
+			throw new AuthenticationCredentialsNotFoundException("Invalid credentials");
 		}
 		
 		return mapper.map(user);
