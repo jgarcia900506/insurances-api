@@ -20,7 +20,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format-sql: true
@@ -30,10 +30,6 @@ spring:
     jpa:
       repositories:
         enabled: true
-  sql:
-    init:
-      data-locations:
-      - classpath*: data.sql
 
 logging:
   level:
